@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://textures/tilemaps/dungeontiles.tres" type="TileSet" id=1]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://textures/industrial.v2.png" type="Texture" id=3]
+[ext_resource path="res://textures/boss1.png" type="Texture" id=4]
+[ext_resource path="res://scripts/boss1.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "playerIdle"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 512, 513, 514, 515, 516, 517, 518, 519 ]
+}
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends AnimationPlayer
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 16.0555, 23.9773 )
+
+[node name="World" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -65536, 1073741854, 0, -65535, 1073741854, 0, -65534, 1073741854, 0, -65533, 1073741854, 0, -65532, 1073741854, 0, -65531, 1073741854, 0, -65530, 1073741854, 0, -65529, 1073741854, 0, -65528, 1073741854, 0, -65527, 1073741854, 0, -65526, 1073741854, 0, -65525, 1073741854, 0, -65524, 1073741854, 0, -65523, 1073741854, 0, -65522, 1073741854, 0, -65521, 1073741854, 0, -65520, 1073741854, 0, -65519, 1073741854, 0, -65518, 1073741854, 0, -65517, 1073741854, 0, -65516, 1073741854, 0, -65515, 1073741854, 0, -65514, 1073741854, 0, -65513, 1073741854, 0, -65512, 1073741854, 0, -65511, 1073741854, 0, -65510, 1073741854, 0, -65509, 1073741854, 0, -65508, 1073741854, 0, -65507, 1073741854, 0, -65506, 1073741854, 0, -65505, 1073741854, 0, 262149, 536870920, 0, 262150, 536870915, 0, 262151, 536870918, 0, 262152, 536870915, 0, 262153, 536870919, 0, 327686, 536870916, 0, 327688, 536870916, 0, 393218, 536870920, 0, 393219, 536870919, 0, 393222, 536870916, 0, 393224, 536870916, 0, 458758, 536870917, 0, 458760, 536870917, 0, 524293, 536870920, 0, 524294, 536870915, 0, 524295, 536870918, 0, 524296, 536870915, 0, 524297, 536870919, 0, 589830, 536870916, 0, 589832, 536870916, 0, 655362, 536870920, 0, 655363, 536870919, 0, 655366, 536870916, 0, 655368, 536870916, 0, 720902, 536870917, 0, 720904, 536870917, 0, 786437, 536870920, 0, 786438, 536870915, 0, 786439, 536870918, 0, 786440, 536870915, 0, 786441, 536870919, 0, 851974, 536870916, 0, 851976, 536870916, 0, 917506, 536870920, 0, 917507, 536870919, 0, 917510, 536870916, 0, 917512, 536870916, 0, 983046, 536870917, 0, 983048, 536870917, 0, 1048576, 30, 0, 1048577, 30, 0, 1048578, 30, 0, 1048579, 30, 0, 1048580, 30, 0, 1048581, 30, 0, 1048582, 30, 0, 1048583, 30, 0, 1048584, 30, 0, 1048585, 30, 0, 1048586, 30, 0, 1048587, 25, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 117.422, 52.1081 )
+scale = Vector2( 0.25, 0.25 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Player"]
+editor/display_folded = true
+scale = Vector2( 4, 4 )
+texture = ExtResource( 3 )
+vframes = 32
+hframes = 32
+frame = 512
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Sprite"]
+autoplay = "playerIdle"
+playback_speed = 1.5
+anims/playerIdle = SubResource( 1 )
+script = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
+position = Vector2( -2.46106, 8.30777 )
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Player"]
+position = Vector2( -1.84666, 4.00111 )
+scale = Vector2( 1.831, 2.81589 )
+
+[node name="FireOrigin" type="Position2D" parent="Player"]
+position = Vector2( 28, 8 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 16 )
+format = 1
+tile_data = PoolIntArray( 14, 32, 0, 65550, 32, 0, 131086, 32, 0, 196622, 32, 0, 262158, 32, 0, 327694, 32, 0, 393230, 32, 0, 458766, 32, 0, 524302, 32, 0, 589838, 32, 0, 655374, 32, 0, 720910, 32, 0, 786446, 32, 0, 851982, 32, 0, 917518, 32, 0, 983054, 32, 0, 1048590, 32, 0, 1114126, 32, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="boss1" type="Sprite" parent="."]
+editor/display_folded = true
+position = Vector2( 464.397, 160 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 48 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Tween" type="Tween" parent="boss1"]
+[connection signal="screen_exited" from="Player/VisibilityNotifier2D" to="Player" method="_screen_exited"]
